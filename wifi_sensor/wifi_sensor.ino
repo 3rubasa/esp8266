@@ -8,8 +8,8 @@
 
 // TODO: Adjust these values
 #define WAIT_FOR_CONNECT_ON_RESUME 10000 // ms
-#define WAIT_FOR_CONNECT_ON_NEW 60000 // ms
-#define DEEP_SEEP_LENGTH 600e6 // 10 min in us
+#define WAIT_FOR_CONNECT_ON_NEW 15000 // ms
+#define DEEP_SEEP_LENGTH 600e6//600e6 // 10 min in us
 #define SERIAL_BAUD_RATE 115200
 
 #define SHT20_I2C_ADDRESS 64 // 0x40 in decimal
