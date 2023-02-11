@@ -31,6 +31,11 @@ const char* host = SRV_ADDRESS;
 const uint16_t port = SRV_PORT;
 
 void setup() {
+  // Turn off the radio module so that it does not consume energy when we are obtaining the temperature reading
+  WiFi.mode( WIFI_OFF );
+  WiFi.forceSleepBegin();
+  delay( 1 );
+
   Serial.begin(SERIAL_BAUD_RATE);
   Serial.setDebugOutput(true);
 
@@ -54,6 +59,9 @@ void setup() {
   // ---
 
   Serial.println("Trying to resume WiFi connection...");
+
+  WiFi.forceSleepWake();
+  delay( 1 );
 
   ESP.rtcUserMemoryRead(RTC_USER_DATA_SLOT_WIFI_STATE, reinterpret_cast<uint32_t*>(&state), sizeof(state));
   unsigned long start = millis();
