@@ -10,7 +10,7 @@
 #define DEEP_SEEP_LENGTH 10e6//600e6 // 10 min in us
 #define SERIAL_BAUD_RATE 115200
 
-#define SHT20_I2C_ADDRESS 64 // 0x40 in decimal
+//#define SHT20_I2C_ADDRESS 64 // 0x40 in decimal
 
 #define RTC_USER_DATA_SLOT_WIFI_STATE 33u
 
@@ -19,7 +19,10 @@
 #include <include/WiFiState.h>  // WiFiState structure details
 
 #include <Wire.h>
-#include "DFRobot_SHT20.h"
+#include "DHT.h"
+
+#define DHTPIN 4
+#define DHTTYPE DHT22
 
 WiFiState state;
 
@@ -39,17 +42,23 @@ void setup() {
   Serial.begin(SERIAL_BAUD_RATE);
   Serial.setDebugOutput(true);
 
+  DHT dht(DHTPIN, DHTTYPE);
+  dht.begin();
+
   // May be necessary after deepSleep. Otherwise you may get "error: pll_cal exceeds 2ms!!!" when trying to connect
   delay(1);
 
   Serial.println("Getting the current temperature from sensor...");
   
-  DFRobot_SHT20 sht20;
-  sht20.initSHT20();                         // Init SHT20 Sensor
-  delay(100);
-  sht20.checkSHT20();                        // Check SHT20 Sensor
+  //DFRobot_SHT20 sht20;
+  //sht20.initSHT20();                         // Init SHT20 Sensor
+  //delay(100);
+  //sht20.checkSHT20();                        // Check SHT20 Sensor
 
-  float temperature = sht20.readTemperature();
+  float temperature = dht.readTemperature();//sht20.readTemperature();
+  if (isnan(temperature)) {
+    temperature = -99.0;
+  }
   Serial.print("Temperature = ");
   Serial.println(temperature);
 
