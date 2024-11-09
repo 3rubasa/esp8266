@@ -7,7 +7,7 @@
 
 #define WAIT_FOR_CONNECT_ON_RESUME 10000 // ms
 #define WAIT_FOR_CONNECT_ON_NEW 15000 // ms
-#define DEEP_SEEP_LENGTH 10e6//600e6 // 10 min in us
+#define DEEP_SEEP_LENGTH 60e6//600e6 // 10 min in us
 #define SERIAL_BAUD_RATE 115200
 
 #define SHT20_I2C_ADDRESS 64 // 0x40 in decimal
@@ -100,7 +100,8 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 
-  IPAddress gwIP = WiFi.gatewayIP();
+  //IPAddress gwIP = WiFi.gatewayIP();
+  IPAddress gwIP(10,0,0,20);
   Serial.println("Gateway IP adderss: ");
   Serial.println(gwIP);
 
@@ -119,6 +120,9 @@ void setup() {
   // This will send a string to the server
   Serial.println("sending data to server");
   if (client.connected()) { client.println(message); }
+  client.flush();
+
+  delay( 1000 );
 
   // Close the connection
   Serial.println();
