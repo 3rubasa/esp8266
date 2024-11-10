@@ -2,12 +2,12 @@
 #define STASSID "rr"
 #define STAPSK "User@1234"
 
-// The client will connect to the gateway IP address
+// The client will connect to the hardcoded IP-address 10.0.0.20
 #define SRV_PORT 3333
 
 #define WAIT_FOR_CONNECT_ON_RESUME 10000 // ms
 #define WAIT_FOR_CONNECT_ON_NEW 15000 // ms
-#define DEEP_SEEP_LENGTH 60e6//600e6 // 10 min in us
+#define DEEP_SEEP_LENGTH 60e6 // 1 minute in us
 #define SERIAL_BAUD_RATE 115200
 
 #define SHT20_I2C_ADDRESS 64 // 0x40 in decimal
