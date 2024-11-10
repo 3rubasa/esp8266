@@ -2,12 +2,12 @@
 #define STASSID "rr"
 #define STAPSK "User@1234"
 
-// The client will connect to the gateway IP address
-#define SRV_PORT 3333
+// The client will connect to the hardcoded IP address  10.0.0.20
+#define SRV_PORT 3336
 
 #define WAIT_FOR_CONNECT_ON_RESUME 10000 // ms
 #define WAIT_FOR_CONNECT_ON_NEW 15000 // ms
-#define DEEP_SEEP_LENGTH 10e6//600e6 // 10 min in us
+#define DEEP_SEEP_LENGTH 60e6//600e6 // 10 min in us
 #define SERIAL_BAUD_RATE 115200
 
 //#define SHT20_I2C_ADDRESS 64 // 0x40 in decimal
@@ -57,7 +57,7 @@ void setup() {
 
   float temperature = dht.readTemperature();//sht20.readTemperature();
   if (isnan(temperature)) {
-    temperature = -99.0;
+    temperature = 998.0;
   }
   Serial.print("Temperature = ");
   Serial.println(temperature);
@@ -109,7 +109,7 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 
-  IPAddress gwIP = WiFi.gatewayIP();
+  IPAddress gwIP(10, 0, 0, 20);//WiFi.gatewayIP();
   Serial.println("Gateway IP adderss: ");
   Serial.println(gwIP);
 
@@ -129,6 +129,9 @@ void setup() {
   Serial.println("sending data to server");
   if (client.connected()) { client.println(message); }
 
+  delay(1000);
+  client.flush();
+  
   // Close the connection
   Serial.println();
   Serial.println("closing connection");
